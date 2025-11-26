@@ -11,4 +11,8 @@
     <ProjectReference Include="..\ProjetoDevTrail.Infra\ProjetoDevTrail.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCase\Account\" />
+  </ItemGroup>
+
 </Project>
