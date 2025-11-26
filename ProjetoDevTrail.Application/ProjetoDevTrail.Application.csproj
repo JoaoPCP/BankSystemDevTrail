@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="UseCase\Account\" />
+    <Folder Include="UseCase\Client\" />
   </ItemGroup>
 
 </Project>
