@@ -1,10 +1,10 @@
-﻿using ProjetoDevTrail.Domain.Enum.Transaction;
+﻿using ProjetoDevTrail.Domain.Commons;
+using ProjetoDevTrail.Domain.Enum.Transaction;
 
 namespace ProjetoDevTrail.Domain.Entities
 {
-    public class Transaction
+    public class Transaction : BaseEntity
     {
-        public Guid Id { get; }
         public TransactionType Type { get; set; }
         public decimal Amount { get; set; }
         public DateTime TransactionDate { get; set; }
@@ -25,8 +25,8 @@ namespace ProjetoDevTrail.Domain.Entities
             Guid? destinationAccount_Id,
             Account? destinationAccount
         )
+            : base(id)
         {
-            Id = id;
             Amount = amount;
             Type = type;
             TransactionDate = transactionDate;
