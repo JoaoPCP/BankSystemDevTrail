@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoDevTrail.Application.DTO.AccountDTO;
 using ProjetoDevTrail.Application.UseCase.Accounts.CreateAccount;
+using ProjetoDevTrail.Application.UseCase.Accounts.GetAccountById;
 using ProjetoDevTrail.Application.UseCase.Accounts.GetAllAccounts;
 
 namespace ProjetoDevTrail.Api.Controllers
@@ -16,8 +17,7 @@ namespace ProjetoDevTrail.Api.Controllers
         )
         {
             var response = await handler.HandleAsync(dto);
-            return Ok(response);
-            //return CreatedAtAction(nameof(GetAccountById), new { id = response.Id }, response);
+            return CreatedAtAction(nameof(GetAccountById), new { id = response.Id }, response);
         }
 
         [HttpGet]
@@ -27,6 +27,16 @@ namespace ProjetoDevTrail.Api.Controllers
         {
             var response = await handler.HandleAsync();
             return Ok(response);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetAccountById(
+            [FromServices] IGetAccountByIdHandler handler,
+            [FromRoute] Guid id
+        )
+        {
+            var result = await handler.HandleAsync(id);
+            return Ok(result);
         }
     }
 }

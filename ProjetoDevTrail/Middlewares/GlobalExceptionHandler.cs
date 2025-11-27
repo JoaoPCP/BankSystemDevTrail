@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using ProjetoDevTrail.Api.Utills.Exceptions;
+using ProjetoDevTrail.Application.Utils.Exceptions;
 
 namespace ProjetoDevTrail.Api.Middlewares
 {

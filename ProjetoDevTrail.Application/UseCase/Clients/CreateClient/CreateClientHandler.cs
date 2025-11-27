@@ -10,7 +10,7 @@ namespace ProjetoDevTrail.Application.UseCase.Clients.CreateClient
         public async Task<ClientViewDTO> HandleAsync(CreateClientDTO dto)
         {
             var clientExists = await repo.GetByCPFAsync(dto.CPF);
-            if (clientExists == null)
+            if (clientExists != null)
                 throw new ConflictException("Já existe um cliente com esse CPF");
 
             Client newClient = Client.Create(dto.Name, dto.Email, dto.CPF, dto.BirthDate);
