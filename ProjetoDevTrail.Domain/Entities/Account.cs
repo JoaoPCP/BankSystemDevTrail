@@ -1,10 +1,10 @@
-﻿using ProjetoDevTrail.Domain.Enum.Account;
+﻿using ProjetoDevTrail.Domain.Commons;
+using ProjetoDevTrail.Domain.Enum.Account;
 
 namespace ProjetoDevTrail.Domain.Entities
 {
-    public class Account
+    public class Account : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Numero { get; set; } = string.Empty;
         public Client Owner { get; set; } = null!; //para o construtor privado
         public Guid OwnerID { get; set; }
@@ -34,8 +34,8 @@ namespace ProjetoDevTrail.Domain.Entities
             DateTime createdAt,
             DateTime? updatedAt
         )
+            : base(id)
         {
-            Id = id;
             Numero = numero;
             OwnerID = owner.Id;
             Owner = owner;
