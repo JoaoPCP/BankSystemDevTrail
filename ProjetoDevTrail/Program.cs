@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProjetoDevTrail.Api.Utills;
+using ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers;
 using ProjetoDevTrail.Infra.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,10 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddUseCases();
 builder.Services.AddDbContext<BankContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BankDatabase"))
 );
+builder.Services.AddDependencies();
 
 var app = builder.Build();
 
