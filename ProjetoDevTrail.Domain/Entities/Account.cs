@@ -6,12 +6,12 @@ namespace ProjetoDevTrail.Domain.Entities
     public class Account : BaseEntity
     {
         public string Numero { get; set; } = string.Empty;
-        public Client Owner { get; set; } = null!; //para o construtor privado
+        public Client? Owner { get; set; } = null;
         public Guid OwnerID { get; set; }
         public DateTime CreatedAt { get; }
         public DateTime? UpdatedAt { get; set; }
-        public decimal Saldo { get; private set; }
-        public AccountType Tipo { get; set; }
+        public decimal Balance { get; private set; }
+        public AccountType Type { get; set; }
         public AccountStatus Status { get; set; } = AccountStatus.Ativa;
 
         public List<Transaction> IngoingTransactions { get; } = new List<Transaction>();
@@ -27,40 +27,36 @@ namespace ProjetoDevTrail.Domain.Entities
         private Account(
             Guid id,
             string numero,
-            Client owner,
+            Guid ownerId,
             decimal saldo,
             AccountType tipo,
             AccountStatus status,
             DateTime createdAt,
-            DateTime? updatedAt
+            DateTime? updatedAt = null,
+            Client? owner = null
         )
             : base(id)
         {
             Numero = numero;
-            OwnerID = owner.Id;
+            OwnerID = ownerId;
             Owner = owner;
-            Saldo = saldo;
-            Tipo = tipo;
+            Balance = saldo;
+            Type = tipo;
             Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
         }
 
-        public static Account Create(
-            string numero,
-            Client titular,
-            AccountType tipo,
-            AccountStatus status
-        )
+        public static Account Create(Guid ownerId, AccountType tipo)
         {
+            string numero = new Random().Next(10000000, 99999999).ToString();
             return new Account(
                 id: Guid.NewGuid(),
                 numero: numero,
-                owner: titular,
+                ownerId: ownerId,
                 tipo: tipo,
                 status: AccountStatus.Ativa,
                 createdAt: DateTime.Now,
-                updatedAt: null,
                 saldo: 0
             );
         }
@@ -71,7 +67,7 @@ namespace ProjetoDevTrail.Domain.Entities
             {
                 throw new Exception("O valor do depósito deve ser maior que zero");
             }
-            Saldo += valor;
+            Balance += valor;
         }
 
         public void Sacar(decimal valor)
@@ -80,11 +76,11 @@ namespace ProjetoDevTrail.Domain.Entities
             {
                 throw new Exception("O valor do saque deve ser maior que zero");
             }
-            if (valor > Saldo)
+            if (valor > Balance)
             {
                 throw new Exception("Saldo insuficiente para o saque");
             }
-            Saldo -= valor;
+            Balance -= valor;
         }
     }
 }

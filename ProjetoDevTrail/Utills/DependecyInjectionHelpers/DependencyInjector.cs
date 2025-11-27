@@ -1,4 +1,5 @@
-﻿using ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers.Clients;
+﻿using ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers.Accounts;
+using ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers.Clients;
 
 namespace ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers
 {
@@ -8,6 +9,8 @@ namespace ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers
         {
             services = ClientDependencyInjection.AddRepository(services);
             services = ClientDependencyInjection.AddUseCases(services);
+            services = AccountDependecyInjection.AddRepository(services);
+            services = AccountDependecyInjection.AddUseCases(services);
             return services;
         }
     }
