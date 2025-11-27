@@ -1,4 +1,4 @@
-﻿namespace ProjetoDevTrail.Api.Utills.Exceptions
+﻿namespace ProjetoDevTrail.Application.Utils.Exceptions
 {
     public class NotFoundException : ExceptionWithStatusCode
     {

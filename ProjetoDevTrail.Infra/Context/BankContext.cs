@@ -21,8 +21,8 @@ namespace ProjetoDevTrail.Infra.Context
             {
                 entity.HasKey(acc => acc.Id);
                 entity.Property(acc => acc.Numero).IsRequired().HasMaxLength(20);
-                entity.Property(acc => acc.Saldo).IsRequired().HasColumnType("decimal(18,2)");
-                entity.Property(acc => acc.Tipo).IsRequired();
+                entity.Property(acc => acc.Balance).IsRequired().HasColumnType("decimal(18,2)");
+                entity.Property(acc => acc.Type).IsRequired();
                 entity.Property(acc => acc.Status).IsRequired();
                 entity.Property(acc => acc.CreatedAt).IsRequired();
                 entity.Property(acc => acc.UpdatedAt);

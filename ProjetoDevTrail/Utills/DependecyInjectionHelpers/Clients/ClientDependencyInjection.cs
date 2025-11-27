@@ -1,6 +1,7 @@
 ﻿using ProjetoDevTrail.Application.UseCase.Clients.CreateClient;
 using ProjetoDevTrail.Application.UseCase.Clients.DeleteClient;
 using ProjetoDevTrail.Application.UseCase.Clients.GetAllClients;
+using ProjetoDevTrail.Application.UseCase.Clients.GetClientByCPF;
 using ProjetoDevTrail.Application.UseCase.Clients.GetClientById;
 using ProjetoDevTrail.Application.UseCase.Clients.UpdateClient;
 using ProjetoDevTrail.Infra.Repositories.ClientRepositories;
@@ -23,7 +24,7 @@ namespace ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers.Clients
             services.AddScoped<IGetClientByIdHandler, GetClientByIdHandler>();
             services.AddScoped<IUpdateClientHandler, UpdateClientHandler>();
             services.AddScoped<IDeleteClientHandler, DeleteClientHandler>();
-
+            services.AddScoped<IGetClientByCPFHandler, GetClientByCPFHandler>();
             return services;
         }
     }
