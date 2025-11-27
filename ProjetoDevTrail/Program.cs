@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ProjetoDevTrail.Api.Middlewares;
 using ProjetoDevTrail.Api.Utills;
 using ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers;
 using ProjetoDevTrail.Infra.Context;
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<BankContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BankDatabase"))
 );
 builder.Services.AddDependencies();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
