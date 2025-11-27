@@ -22,7 +22,7 @@ namespace ProjetoDevTrail.Infra.Repositories.Interface
 
         public virtual async Task<T?> GetByIdAsync(Guid id)
         {
-            return await db.Set<T>().AsNoTracking().FirstAsync(e => e.Id == id);
+            return await db.Set<T>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public virtual async Task<T> UpdateAsync(T entity)
