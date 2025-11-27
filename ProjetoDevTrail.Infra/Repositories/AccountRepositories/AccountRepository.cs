@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProjetoDevTrail.Domain.Entities;
 using ProjetoDevTrail.Infra.Context;
 using ProjetoDevTrail.Infra.Repositories.Interface;

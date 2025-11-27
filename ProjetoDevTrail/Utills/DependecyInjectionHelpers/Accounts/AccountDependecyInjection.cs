@@ -1,6 +1,8 @@
 ﻿using ProjetoDevTrail.Application.UseCase.Accounts.CreateAccount;
+using ProjetoDevTrail.Application.UseCase.Accounts.DeleteAccount;
 using ProjetoDevTrail.Application.UseCase.Accounts.GetAccountById;
 using ProjetoDevTrail.Application.UseCase.Accounts.GetAllAccounts;
+using ProjetoDevTrail.Application.UseCase.Accounts.UpdateAccount;
 using ProjetoDevTrail.Infra.Repositories.AccountRepositories;
 
 namespace ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers.Accounts
@@ -19,6 +21,8 @@ namespace ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers.Accounts
             services.AddScoped<ICreateAccountHandler, CreateAccountHandler>();
             services.AddScoped<IGetAllAccountsHandler, GetAllAccountsHandler>();
             services.AddScoped<IGetAccountByIdHandler, GetAccountByIdHandler>();
+            services.AddScoped<IUpdateAccountHandler, UpdateAccountHandler>();
+            services.AddScoped<IDeleteAccountHandler, DeleteAccountHandler>();
             return services;
         }
     }

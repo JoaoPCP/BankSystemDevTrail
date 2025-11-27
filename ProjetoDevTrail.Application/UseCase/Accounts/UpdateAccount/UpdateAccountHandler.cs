@@ -2,15 +2,25 @@
 using ProjetoDevTrail.Application.Utils.Exceptions;
 using ProjetoDevTrail.Infra.Repositories.AccountRepositories;
 
-namespace ProjetoDevTrail.Application.UseCase.Accounts.GetAccountById
+namespace ProjetoDevTrail.Application.UseCase.Accounts.UpdateAccount
 {
-    public class GetAccountByIdHandler(IAccountRepository accRepo) : IGetAccountByIdHandler
+    public class UpdateAccountHandler : IUpdateAccountHandler
     {
-        public async Task<AccountViewDTO> HandleAsync(Guid id)
+        private readonly IAccountRepository _accRepo;
+
+        public UpdateAccountHandler(IAccountRepository accRepo)
         {
-            var account = await accRepo.GetByIdAsync(id);
+            _accRepo = accRepo;
+        }
+
+        public async Task<AccountViewDTO> HandleAsync(Guid id, UpdateAccountDTO dto)
+        {
+            var account = await _accRepo.GetByIdAsync(id);
+
             if (account == null)
                 throw new NotFoundException("Conta não encontrada");
+            account.Status = dto.Status;
+            await _accRepo.UpdateAsync(account);
             return new AccountViewDTO(
                 account.Id,
                 account.Numero,
