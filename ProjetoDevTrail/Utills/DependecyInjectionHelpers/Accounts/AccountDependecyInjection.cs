@@ -1,4 +1,5 @@
 ﻿using ProjetoDevTrail.Application.UseCase.Accounts.CreateAccount;
+using ProjetoDevTrail.Application.UseCase.Accounts.GetAllAccounts;
 using ProjetoDevTrail.Infra.Repositories.AccountRepositories;
 
 namespace ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers.Accounts
@@ -15,6 +16,7 @@ namespace ProjetoDevTrail.Api.Utills.DependecyInjectionHelpers.Accounts
         {
             // Clients Use Cases
             services.AddScoped<ICreateAccountHandler, CreateAccountHandler>();
+            services.AddScoped<IGetAllAccountsHandler, GetAllAccountsHandler>();
             return services;
         }
     }
