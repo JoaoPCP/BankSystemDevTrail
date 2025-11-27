@@ -7,7 +7,7 @@ namespace ProjetoDevTrail.Application.UseCase.Clients.GetClientByCPF
 {
     public class GetClientByCPFHandler(IClientRepository repo) : IGetClientByCPFHandler
     {
-        public async Task<ClientViewDTO?> HandleAsync(string cpf)
+        public async Task<ClientViewDTO> HandleAsync(string cpf)
         {
             var client = await repo.GetByCPFAsync(cpf);
             if (client == null)
