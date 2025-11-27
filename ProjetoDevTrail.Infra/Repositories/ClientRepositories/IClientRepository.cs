@@ -3,5 +3,8 @@ using ProjetoDevTrail.Infra.Repositories.Commons;
 
 namespace ProjetoDevTrail.Infra.Repositories.ClientRepositories
 {
-    public interface IClientRepository : IRepository<Client> { }
+    public interface IClientRepository : IRepository<Client>
+    {
+        Task GetByCPFAsync(string cPF);
+    }
 }
