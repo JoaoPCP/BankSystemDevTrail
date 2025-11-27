@@ -1,9 +1,9 @@
-﻿using ProjetoDevTrail.Domain.Entities;
+﻿using ProjetoDevTrail.Application.DTO.ClientDTO;
 
 namespace ProjetoDevTrail.Application.UseCase.Clients.GetClientByCPF
 {
     public interface IGetClientByCPFHandler
     {
-        public Task<Client?> HandleAsync(string cpf);
+        public Task<ClientViewDTO?> HandleAsync(string cpf);
     }
 }
