@@ -1,4 +1,5 @@
-﻿using ProjetoDevTrail.Domain.Entities;
+﻿using ProjetoDevTrail.Application.Utils.Exceptions;
+using ProjetoDevTrail.Domain.Entities;
 using ProjetoDevTrail.Infra.Repositories.ClientRepositories;
 
 namespace ProjetoDevTrail.Application.UseCase.Clients.GetClientByCPF
@@ -9,7 +10,7 @@ namespace ProjetoDevTrail.Application.UseCase.Clients.GetClientByCPF
         {
             var client = await repo.GetByCPFAsync(cpf);
             if (client == null)
-                throw new KeyNotFoundException("Cliente não encontrado para o CPF informado");
+                throw new NotFoundException("Cliente não encontrado para o CPF informado");
             return client;
         }
     }
