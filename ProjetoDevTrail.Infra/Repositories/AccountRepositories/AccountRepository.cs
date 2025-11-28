@@ -25,14 +25,5 @@ namespace ProjetoDevTrail.Infra.Repositories.AccountRepositories
                 .Accounts.Include(acc => acc.Owner)
                 .FirstOrDefaultAsync(acc => acc.Number == accountNumber);
         }
-
-        public async Task<List<Account>> GetByClientIdAsync(Guid clientId)
-        {
-            return await db
-                .Accounts.Include(acc => acc.Owner)
-                .Where(acc => acc.Owner!.Id == clientId)
-                .AsNoTracking()
-                .ToListAsync();
-        }
     }
 }
