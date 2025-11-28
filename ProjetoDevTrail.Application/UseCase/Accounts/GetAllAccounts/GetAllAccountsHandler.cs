@@ -11,7 +11,7 @@ namespace ProjetoDevTrail.Application.UseCase.Accounts.GetAllAccounts
             return result
                 .Select(account => new AccountViewDTO(
                     account.Id,
-                    account.Numero,
+                    account.Number,
                     account.Owner!.Name,
                     account.Owner.CPF,
                     account.Type.ToString(),

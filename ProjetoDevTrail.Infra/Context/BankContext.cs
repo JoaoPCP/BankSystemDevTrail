@@ -20,7 +20,7 @@ namespace ProjetoDevTrail.Infra.Context
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(acc => acc.Id);
-                entity.Property(acc => acc.Numero).IsRequired().HasMaxLength(20);
+                entity.Property(acc => acc.Number).IsRequired().HasMaxLength(20);
                 entity.Property(acc => acc.Balance).IsRequired().HasColumnType("decimal(18,2)");
                 entity.Property(acc => acc.Type).IsRequired();
                 entity.Property(acc => acc.Status).IsRequired();

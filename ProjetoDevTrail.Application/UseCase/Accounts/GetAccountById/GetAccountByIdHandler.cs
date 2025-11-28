@@ -13,7 +13,7 @@ namespace ProjetoDevTrail.Application.UseCase.Accounts.GetAccountById
                 throw new NotFoundException("Conta não encontrada");
             return new AccountViewDTO(
                 account.Id,
-                account.Numero,
+                account.Number,
                 account.Owner!.Name,
                 account.Owner.CPF,
                 account.Type.ToString(),

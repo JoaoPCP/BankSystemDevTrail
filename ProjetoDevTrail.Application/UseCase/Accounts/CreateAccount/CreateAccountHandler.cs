@@ -16,7 +16,7 @@ namespace ProjetoDevTrail.Application.UseCase.Accounts.CreateAccount
             await AccRepo.AddAsync(account);
             return new AccountViewDTO(
                 account.Id,
-                account.Numero,
+                account.Number,
                 owner.Name,
                 owner.CPF,
                 account.Type.ToString(),

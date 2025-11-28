@@ -5,12 +5,12 @@ namespace ProjetoDevTrail.Domain.Entities
 {
     public class Account : BaseEntity
     {
-        public string Numero { get; set; } = string.Empty;
+        public string Number { get; set; } = string.Empty;
         public Client? Owner { get; set; } = null;
         public Guid OwnerID { get; set; }
         public DateTime CreatedAt { get; }
         public DateTime? UpdatedAt { get; set; }
-        public decimal Balance { get; private set; }
+        public decimal Balance { get; protected set; }
         public AccountType Type { get; set; }
         public AccountStatus Status { get; set; } = AccountStatus.Ativa;
 
@@ -19,7 +19,7 @@ namespace ProjetoDevTrail.Domain.Entities
 
         public IEnumerable<Transaction> Transactions
         {
-            get { return IngoingTransactions.Concat(OutgoingTransactions); }
+            get { return IngoingTransactions.Concat(OutgoingTransactions).ToList(); }
         }
 
         private Account() { }
@@ -37,7 +37,7 @@ namespace ProjetoDevTrail.Domain.Entities
         )
             : base(id)
         {
-            Numero = numero;
+            Number = numero;
             OwnerID = ownerId;
             Owner = owner;
             Balance = saldo;
@@ -61,25 +61,13 @@ namespace ProjetoDevTrail.Domain.Entities
             );
         }
 
-        public void Depositar(decimal valor)
+        public void Deposit(decimal valor)
         {
-            if (valor <= 0)
-            {
-                throw new Exception("O valor do depósito deve ser maior que zero");
-            }
             Balance += valor;
         }
 
-        public void Sacar(decimal valor)
+        public void Withdraw(decimal valor)
         {
-            if (valor <= 0)
-            {
-                throw new Exception("O valor do saque deve ser maior que zero");
-            }
-            if (valor > Balance)
-            {
-                throw new Exception("Saldo insuficiente para o saque");
-            }
             Balance -= valor;
         }
     }
