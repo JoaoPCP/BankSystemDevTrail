@@ -24,5 +24,19 @@ namespace ProjetoDevTrail.Infra.Repositories.TransactionRepositories
                 .FirstOrDefaultAsync(t => t.Id == id);
             return result;
         }
+
+        public async Task<List<Transaction>> GetByAccountIdAsync(Guid accountID)
+        {
+            var result = await db
+                .Transactions.Where(t =>
+                    t.OriginAccount_Id == accountID || t.DestinationAccount_Id == accountID
+                )
+                .Include(t => t.OriginAccount)
+                .Include(t => t.DestinationAccount)
+                .OrderByDescending(t => t.TransactionDate)
+                .AsNoTracking()
+                .ToListAsync();
+            return result;
+        }
     }
 }

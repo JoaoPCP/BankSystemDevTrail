@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoDevTrail.Application.DTO.AccountDTO;
 using ProjetoDevTrail.Application.DTO.ClientDTO;
+using ProjetoDevTrail.Application.DTO.TransactionDTO;
 using ProjetoDevTrail.Application.UseCase.Accounts.CreateAccount;
 using ProjetoDevTrail.Application.UseCase.Accounts.DeleteAccount;
 using ProjetoDevTrail.Application.UseCase.Accounts.GetAccountById;
@@ -8,6 +9,7 @@ using ProjetoDevTrail.Application.UseCase.Accounts.GetAllAccounts;
 using ProjetoDevTrail.Application.UseCase.Accounts.GetByClient;
 using ProjetoDevTrail.Application.UseCase.Accounts.UpdateAccount;
 using ProjetoDevTrail.Application.UseCase.Clients.GetClientByCPF;
+using ProjetoDevTrail.Application.UseCase.Transactions.GetTransactionsByAccount;
 
 namespace ProjetoDevTrail.Api.Controllers
 {
@@ -86,6 +88,16 @@ namespace ProjetoDevTrail.Api.Controllers
                     accounts = clientAccounts,
                 }
             );
+        }
+
+        [HttpGet("{id}/transactions")]
+        public async Task<IActionResult> GetAccountTransactions(
+            [FromServices] IGetTransactionsByAccountHandler handler,
+            [FromRoute] Guid id
+        )
+        {
+            List<TransactionViewDTO> result = await handler.HandleAsync(id);
+            return Ok(new { account = id, transactions = result });
         }
     }
 }
