@@ -8,10 +8,10 @@ namespace ProjetoDevTrail.Domain.Entities
         public TransactionType Type { get; set; }
         public decimal Amount { get; set; }
         public DateTime TransactionDate { get; set; }
-        public Guid OriginAccount_Id { get; set; }
-        public Account OriginAccount { get; set; } = null!;
+        public Guid? OriginAccount_Id { get; set; }
+        public Account? OriginAccount { get; set; } = null;
         public Guid? DestinationAccount_Id { get; set; }
-        public Account? DestinationAccount { get; set; }
+        public Account? DestinationAccount { get; set; } = null;
 
         private Transaction() { }
 
@@ -20,8 +20,8 @@ namespace ProjetoDevTrail.Domain.Entities
             TransactionType type,
             decimal amount,
             DateTime transactionDate,
-            Guid originAccount_Id,
-            Account originAccount,
+            Guid? originAccount_Id,
+            Account? originAccount,
             Guid? destinationAccount_Id,
             Account? destinationAccount
         )
@@ -36,24 +36,58 @@ namespace ProjetoDevTrail.Domain.Entities
             DestinationAccount = destinationAccount;
         }
 
-        public static Transaction Create(
-            TransactionType type,
+        public static Transaction CreateDeposit(
             decimal amount,
             Guid originAccount_Id,
-            Account originAccount,
-            Guid? destinationAccount_Id = null,
-            Account? destinationAccount = null
+            DateTime transactionDate
         )
         {
             return new Transaction(
                 id: Guid.NewGuid(),
-                type: type,
+                type: TransactionType.Deposito,
                 amount: amount,
-                transactionDate: DateTime.UtcNow,
+                transactionDate: transactionDate,
                 originAccount_Id: originAccount_Id,
-                originAccount: originAccount,
+                originAccount: null,
+                destinationAccount_Id: originAccount_Id,
+                destinationAccount: null
+            );
+        }
+
+        public static Transaction CreateWithdrawal(
+            decimal amount,
+            Guid originAccount_Id,
+            DateTime transactionDate
+        )
+        {
+            return new Transaction(
+                id: Guid.NewGuid(),
+                type: TransactionType.Saque,
+                amount: amount,
+                transactionDate: transactionDate,
+                originAccount_Id: originAccount_Id,
+                originAccount: null,
+                destinationAccount_Id: null,
+                destinationAccount: null
+            );
+        }
+
+        public static Transaction CreateTransfer(
+            decimal amount,
+            Guid originAccount_Id,
+            Guid destinationAccount_Id,
+            DateTime transactionDate
+        )
+        {
+            return new Transaction(
+                id: Guid.NewGuid(),
+                type: TransactionType.Transferencia,
+                amount: amount,
+                transactionDate: transactionDate,
+                originAccount_Id: originAccount_Id,
+                originAccount: null,
                 destinationAccount_Id: destinationAccount_Id,
-                destinationAccount: destinationAccount
+                destinationAccount: null
             );
         }
     }

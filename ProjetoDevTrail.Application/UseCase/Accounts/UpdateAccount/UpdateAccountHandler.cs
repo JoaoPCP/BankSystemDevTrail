@@ -13,17 +13,18 @@ namespace ProjetoDevTrail.Application.UseCase.Accounts.UpdateAccount
             _accRepo = accRepo;
         }
 
-        public async Task<AccountViewDTO> HandleAsync(Guid id, UpdateAccountDTO dto)
+        public async Task<AccountViewDTO> HandleAsync(Guid id, UpdateAccountByEndpointDTO dto)
         {
             var account = await _accRepo.GetByIdAsync(id);
 
             if (account == null)
                 throw new NotFoundException("Conta não encontrada");
             account.Status = dto.Status;
+            account.UpdatedAt = DateTime.UtcNow;
             await _accRepo.UpdateAsync(account);
             return new AccountViewDTO(
                 account.Id,
-                account.Numero,
+                account.Number,
                 account.Owner!.Name,
                 account.Owner.CPF,
                 account.Type.ToString(),

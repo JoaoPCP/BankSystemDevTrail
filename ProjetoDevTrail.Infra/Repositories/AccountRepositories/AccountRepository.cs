@@ -19,5 +19,13 @@ namespace ProjetoDevTrail.Infra.Repositories.AccountRepositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(acc => acc.Id == id);
         }
+
+        public async Task<Account?> GetByAccountNumberAsync(string accountNumber)
+        {
+            return await db
+                .Accounts.Include(acc => acc.Owner)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(acc => acc.Number == accountNumber);
+        }
     }
 }

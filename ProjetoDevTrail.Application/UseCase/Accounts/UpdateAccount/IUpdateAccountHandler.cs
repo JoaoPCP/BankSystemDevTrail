@@ -4,6 +4,6 @@ namespace ProjetoDevTrail.Application.UseCase.Accounts.UpdateAccount
 {
     public interface IUpdateAccountHandler
     {
-        public Task<AccountViewDTO> HandleAsync(Guid id, UpdateAccountDTO dto);
+        public Task<AccountViewDTO> HandleAsync(Guid id, UpdateAccountByEndpointDTO dto);
     }
 }

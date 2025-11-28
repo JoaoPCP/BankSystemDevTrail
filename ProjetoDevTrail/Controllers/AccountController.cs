@@ -48,7 +48,7 @@ namespace ProjetoDevTrail.Api.Controllers
         public async Task<IActionResult> UpdateAccount(
             [FromServices] IUpdateAccountHandler handler,
             [FromRoute] Guid id,
-            [FromBody] UpdateAccountDTO dto
+            [FromBody] UpdateAccountByEndpointDTO dto
         )
         {
             var response = await handler.HandleAsync(id, dto);
