@@ -4,20 +4,20 @@ using ProjetoDevTrail.Domain.Entities;
 using ProjetoDevTrail.Infra.Repositories.AccountRepositories;
 using ProjetoDevTrail.Infra.Repositories.TransactionRepositories;
 
-namespace ProjetoDevTrail.Application.UseCase.Transactions.Deposit
+namespace ProjetoDevTrail.Application.UseCase.Transactions.Withdraw
 {
-    public class DepositHandler : IDepositHandler
+    public class WithdrawHandler : IWithdrawHandler
     {
         private readonly ITransactionRepository _transRepo;
         private readonly IAccountRepository _accRepo;
 
-        public DepositHandler(ITransactionRepository transRepo, IAccountRepository accRepo)
+        public WithdrawHandler(ITransactionRepository transRepo, IAccountRepository accRepo)
         {
             _accRepo = accRepo;
             _transRepo = transRepo;
         }
 
-        public async Task<DepositViewDTO> HandleAsync(DepositInputDTO dto)
+        public async Task<WithdrawViewDTO> HandleAsync(WithdrawInputDTO dto)
         {
             if (dto.Value <= 0)
                 throw new BadRequestException("Valor do depósito deve ser maior que 0");
@@ -25,20 +25,23 @@ namespace ProjetoDevTrail.Application.UseCase.Transactions.Deposit
             if (account == null)
                 throw new NotFoundException("Conta não encontrada");
             DateTime trasactionTime = DateTime.UtcNow;
-            account.Deposit(dto.Value);
+            bool suceedWithdraw = account.Withdraw(dto.Value);
+            if (!suceedWithdraw)
+                throw new BadRequestException("Saldo insuficiente para realizar o saque");
+
             account.UpdatedAt = trasactionTime;
-            Transaction transaction = Transaction.CreateDeposit(
-                destinationAccountId: account.Id,
+            Transaction transaction = Transaction.CreateWithdraw(
+                originAccount_Id: account.Id,
                 amount: dto.Value,
                 transactionDate: trasactionTime
             );
             await _accRepo.UpdateAsync(account);
             await _transRepo.AddAsync(transaction);
-            return new DepositViewDTO(
+            return new WithdrawViewDTO(
                 transaction.Id,
-                account.Number,
                 transaction.Amount,
-                transaction.TransactionDate
+                transaction.TransactionDate,
+                originAccountNumber: account.Number
             );
         }
     }

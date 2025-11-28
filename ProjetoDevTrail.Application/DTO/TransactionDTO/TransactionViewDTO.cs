@@ -38,7 +38,7 @@ namespace ProjetoDevTrail.Application.DTO.TransactionDTO
                         v.DestinationAccount!.Number
                     );
                 case TransactionType.Transferencia:
-                    return new TransferViewDTO(
+                    return new TransferenceViewDTO(
                         v.Id,
                         v.Amount,
                         v.TransactionDate,

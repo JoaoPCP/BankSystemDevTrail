@@ -38,7 +38,7 @@ namespace ProjetoDevTrail.Domain.Entities
 
         public static Transaction CreateDeposit(
             decimal amount,
-            Guid originAccount_Id,
+            Guid destinationAccountId,
             DateTime transactionDate
         )
         {
@@ -47,14 +47,14 @@ namespace ProjetoDevTrail.Domain.Entities
                 type: TransactionType.Deposito,
                 amount: amount,
                 transactionDate: transactionDate,
-                originAccount_Id: originAccount_Id,
+                originAccount_Id: null,
                 originAccount: null,
-                destinationAccount_Id: originAccount_Id,
+                destinationAccount_Id: destinationAccountId,
                 destinationAccount: null
             );
         }
 
-        public static Transaction CreateWithdrawal(
+        public static Transaction CreateWithdraw(
             decimal amount,
             Guid originAccount_Id,
             DateTime transactionDate
