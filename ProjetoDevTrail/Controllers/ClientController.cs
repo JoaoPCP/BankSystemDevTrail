@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjetoDevTrail.Application.DTO.AccountDTO;
 using ProjetoDevTrail.Application.DTO.ClientDTO;
+using ProjetoDevTrail.Application.UseCase.Accounts.GetByClient;
 using ProjetoDevTrail.Application.UseCase.Clients.CreateClient;
 using ProjetoDevTrail.Application.UseCase.Clients.DeleteClient;
 using ProjetoDevTrail.Application.UseCase.Clients.GetAllClients;
@@ -32,10 +34,17 @@ namespace ProjetoDevTrail.Api.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetClientById(
             [FromServices] IGetClientByIdHandler handler,
-            [FromRoute] Guid id
+            [FromServices] IGetAccountByClientHandler accountHandler,
+            [FromRoute] Guid id,
+            [FromQuery] bool includeAccounts = false
         )
         {
-            var result = await handler.HandleAsync(id);
+            ClientViewDTO result = await handler.HandleAsync(id);
+            if (includeAccounts)
+            {
+                List<AccountInListViewDTO> accounts = await accountHandler.HandleAsync(id);
+                return Ok(new ClientWIthAccountViewDTO(result, accounts));
+            }
             return Ok(result);
         }
 
