@@ -16,7 +16,6 @@ namespace ProjetoDevTrail.Infra.Repositories.AccountRepositories
         {
             return await db
                 .Accounts.Include(acc => acc.Owner)
-                .AsNoTracking()
                 .FirstOrDefaultAsync(acc => acc.Id == id);
         }
 
@@ -24,7 +23,6 @@ namespace ProjetoDevTrail.Infra.Repositories.AccountRepositories
         {
             return await db
                 .Accounts.Include(acc => acc.Owner)
-                .AsNoTracking()
                 .FirstOrDefaultAsync(acc => acc.Number == accountNumber);
         }
     }

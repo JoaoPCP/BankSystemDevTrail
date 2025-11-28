@@ -66,9 +66,12 @@ namespace ProjetoDevTrail.Domain.Entities
             Balance += valor;
         }
 
-        public void Withdraw(decimal valor)
+        public bool Withdraw(decimal valor)
         {
+            if (valor > Balance)
+                return false;
             Balance -= valor;
+            return true;
         }
     }
 }

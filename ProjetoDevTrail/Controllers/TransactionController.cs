@@ -2,6 +2,8 @@
 using ProjetoDevTrail.Application.DTO.TransactionDTO;
 using ProjetoDevTrail.Application.UseCase.Transactions.Deposit;
 using ProjetoDevTrail.Application.UseCase.Transactions.GetTransactionById;
+using ProjetoDevTrail.Application.UseCase.Transactions.Transfer;
+using ProjetoDevTrail.Application.UseCase.Transactions.Withdraw;
 
 namespace ProjetoDevTrail.Api.Controllers
 {
@@ -16,6 +18,26 @@ namespace ProjetoDevTrail.Api.Controllers
         )
         {
             DepositViewDTO result = await handler.HandleAsync(dto);
+            return CreatedAtAction(nameof(GetTransactionById), new { id = result.Id }, result);
+        }
+
+        [HttpPost("/withdraw")]
+        public async Task<IActionResult> Withdraw(
+            [FromBody] WithdrawInputDTO dto,
+            [FromServices] IWithdrawHandler handler
+        )
+        {
+            WithdrawViewDTO result = await handler.HandleAsync(dto);
+            return CreatedAtAction(nameof(GetTransactionById), new { id = result.Id }, result);
+        }
+
+        [HttpPost("/transfer")]
+        public async Task<IActionResult> Transfer(
+            [FromBody] TransferenceInputDTO dto,
+            [FromServices] ITransferenceHandler handler
+        )
+        {
+            TransferenceViewDTO result = await handler.HandleAsync(dto);
             return CreatedAtAction(nameof(GetTransactionById), new { id = result.Id }, result);
         }
 

@@ -2,12 +2,12 @@
 
 namespace ProjetoDevTrail.Application.DTO.TransactionDTO
 {
-    public class TransferViewDTO : TransactionViewDTO
+    public class TransferenceViewDTO : TransactionViewDTO
     {
         public string OriginAccountNumber { get; set; }
         public string DestinationAccountNumber { get; set; }
 
-        public TransferViewDTO(
+        public TransferenceViewDTO(
             Guid id,
             decimal amount,
             DateTime transactionDate,
