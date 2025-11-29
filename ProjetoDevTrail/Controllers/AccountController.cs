@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoDevTrail.Application.DTO.AccountDTO;
+using ProjetoDevTrail.Application.DTO.ClientDTO;
 using ProjetoDevTrail.Application.UseCase.Accounts.CreateAccount;
 using ProjetoDevTrail.Application.UseCase.Accounts.DeleteAccount;
 using ProjetoDevTrail.Application.UseCase.Accounts.GetAccountById;
 using ProjetoDevTrail.Application.UseCase.Accounts.GetAllAccounts;
+using ProjetoDevTrail.Application.UseCase.Accounts.GetByClient;
 using ProjetoDevTrail.Application.UseCase.Accounts.UpdateAccount;
 using ProjetoDevTrail.Application.UseCase.Clients.GetClientByCPF;
 
@@ -63,6 +65,27 @@ namespace ProjetoDevTrail.Api.Controllers
         {
             await handler.HandleAsync(id);
             return Ok(new { message = "conta deletada com sucesso" });
+        }
+
+        [HttpGet("client/{clientCPF}")]
+        public async Task<IActionResult> GetAccountsByClientId(
+            [FromServices] IGetAccountByClientHandler getAccountByClientHandler,
+            [FromServices] IGetClientByCPFHandler getClientByCPFHandler,
+            [FromRoute] string clientCPF
+        )
+        {
+            ClientViewDTO client = await getClientByCPFHandler.HandleAsync(clientCPF);
+            List<AccountInListViewDTO> clientAccounts = await getAccountByClientHandler.HandleAsync(
+                client.Id
+            );
+            return Ok(
+                new
+                {
+                    Client = client.Name,
+                    clientCPF = client.CPF,
+                    accounts = clientAccounts,
+                }
+            );
         }
     }
 }
