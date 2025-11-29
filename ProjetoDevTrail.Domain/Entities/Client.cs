@@ -7,7 +7,7 @@ namespace ProjetoDevTrail.Domain.Entities
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string CPF { get; set; } = string.Empty;
-        public DateTime BirthDate { get; set; }
+        public DateOnly BirthDate { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; } = null;
 
@@ -15,7 +15,7 @@ namespace ProjetoDevTrail.Domain.Entities
 
         private Client() { }
 
-        private Client(Guid id, string name, string email, string cpf, DateTime birthDate)
+        private Client(Guid id, string name, string email, string cpf, DateOnly birthDate)
             : base(id)
         {
             Name = name;
@@ -25,7 +25,7 @@ namespace ProjetoDevTrail.Domain.Entities
             CreatedAt = DateTime.UtcNow;
         }
 
-        public static Client Create(string name, string email, string cpf, DateTime birthDate)
+        public static Client Create(string name, string email, string cpf, DateOnly birthDate)
         {
             return new Client(Guid.NewGuid(), name, email, cpf, birthDate);
         }
