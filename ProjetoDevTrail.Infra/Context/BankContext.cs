@@ -22,8 +22,8 @@ namespace ProjetoDevTrail.Infra.Context
                 entity.HasKey(acc => acc.Id);
                 entity.Property(acc => acc.Number).IsRequired().HasMaxLength(20);
                 entity.Property(acc => acc.Balance).IsRequired().HasColumnType("decimal(18,2)");
-                entity.Property(acc => acc.Type).IsRequired();
-                entity.Property(acc => acc.Status).IsRequired();
+                entity.Property(acc => acc.Type).IsRequired().HasConversion<string>();
+                entity.Property(acc => acc.Status).IsRequired().HasConversion<string>();
                 entity.Property(acc => acc.CreatedAt).IsRequired();
                 entity.Property(acc => acc.UpdatedAt);
                 entity
@@ -40,8 +40,8 @@ namespace ProjetoDevTrail.Infra.Context
                 entity.Property(client => client.Name).HasMaxLength(100);
                 entity.Property(client => client.Email).HasMaxLength(100);
                 entity.Property(client => client.CPF).HasMaxLength(11);
-                entity.Property(client => client.BirthDate);
-                entity.Property(client => client.CreatedAt);
+                entity.Property(client => client.BirthDate).IsRequired();
+                entity.Property(client => client.CreatedAt).IsRequired();
                 entity.Property(client => client.UpdatedAt);
             });
 
@@ -49,7 +49,7 @@ namespace ProjetoDevTrail.Infra.Context
             modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.HasKey(tr => tr.Id);
-                entity.Property(tr => tr.Type);
+                entity.Property(tr => tr.Type).HasConversion<string>();
                 entity.Property(tr => tr.Amount).HasColumnType("decimal(18,2)");
                 entity.Property(tr => tr.TransactionDate);
                 entity
