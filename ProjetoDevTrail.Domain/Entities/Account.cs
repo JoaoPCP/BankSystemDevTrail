@@ -1,4 +1,5 @@
-﻿using ProjetoDevTrail.Domain.Commons;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using ProjetoDevTrail.Domain.Commons;
 using ProjetoDevTrail.Domain.Enum.Account;
 
 namespace ProjetoDevTrail.Domain.Entities
@@ -17,6 +18,7 @@ namespace ProjetoDevTrail.Domain.Entities
         public List<Transaction> IngoingTransactions { get; } = new List<Transaction>();
         public List<Transaction> OutgoingTransactions { get; } = new List<Transaction>();
 
+        [NotMapped]
         public IEnumerable<Transaction> Transactions
         {
             get { return IngoingTransactions.Concat(OutgoingTransactions).ToList(); }

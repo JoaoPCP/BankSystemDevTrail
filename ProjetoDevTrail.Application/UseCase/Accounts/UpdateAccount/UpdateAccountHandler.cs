@@ -4,14 +4,9 @@ using ProjetoDevTrail.Infra.Repositories.AccountRepositories;
 
 namespace ProjetoDevTrail.Application.UseCase.Accounts.UpdateAccount
 {
-    public class UpdateAccountHandler : IUpdateAccountHandler
+    public class UpdateAccountHandler(IAccountRepository accRepo) : IUpdateAccountHandler
     {
-        private readonly IAccountRepository _accRepo;
-
-        public UpdateAccountHandler(IAccountRepository accRepo)
-        {
-            _accRepo = accRepo;
-        }
+        private readonly IAccountRepository _accRepo = accRepo;
 
         public async Task<AccountViewDTO> HandleAsync(Guid id, UpdateAccountByEndpointDTO dto)
         {

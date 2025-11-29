@@ -10,6 +10,8 @@ namespace ProjetoDevTrail.Application.UseCase.Accounts.CreateAccount
 {
     public class CreateAccountHandler(IAccountRepository AccRepo) : ICreateAccountHandler
     {
+        private readonly IAccountRepository AccRepo = AccRepo;
+
         public async Task<AccountViewDTO> HandleAsync(ClientViewDTO owner, CreateAccountDTO dto)
         {
             var account = Account.Create(owner.Id, dto.AccountType);

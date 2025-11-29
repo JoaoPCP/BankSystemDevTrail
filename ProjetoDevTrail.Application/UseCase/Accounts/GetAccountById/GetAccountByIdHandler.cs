@@ -6,9 +6,11 @@ namespace ProjetoDevTrail.Application.UseCase.Accounts.GetAccountById
 {
     public class GetAccountByIdHandler(IAccountRepository accRepo) : IGetAccountByIdHandler
     {
+        private readonly IAccountRepository _accRepo = accRepo;
+
         public async Task<AccountViewDTO> HandleAsync(Guid id)
         {
-            var account = await accRepo.GetByIdAsync(id);
+            var account = await _accRepo.GetByIdAsync(id);
             if (account == null)
                 throw new NotFoundException("Conta não encontrada");
             return new AccountViewDTO(

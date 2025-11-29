@@ -6,9 +6,11 @@ namespace ProjetoDevTrail.Application.UseCase.Clients.GetAllClients
 {
     public class GetAllClientsHandler(IClientRepository repo) : IGetAllClientsHandler
     {
+        private readonly IClientRepository _repo = repo;
+
         public async Task<IEnumerable<ClientViewDTO>> HandleAsync()
         {
-            List<Client> result = await repo.GetAllAsync();
+            List<Client> result = await _repo.GetAllAsync();
             return result.Select(client => new ClientViewDTO(
                 client.Id,
                 client.Name,

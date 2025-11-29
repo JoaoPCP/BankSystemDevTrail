@@ -3,14 +3,10 @@ using ProjetoDevTrail.Infra.Repositories.TransactionRepositories;
 
 namespace ProjetoDevTrail.Application.UseCase.Transactions.GetTransactionsByAccount
 {
-    public class GetTransactionsByAccountHandler : IGetTransactionsByAccountHandler
+    public class GetTransactionsByAccountHandler(ITransactionRepository repo)
+        : IGetTransactionsByAccountHandler
     {
-        private readonly ITransactionRepository _repo;
-
-        public GetTransactionsByAccountHandler(ITransactionRepository repo)
-        {
-            _repo = repo;
-        }
+        private readonly ITransactionRepository _repo = repo;
 
         public async Task<List<TransactionViewDTO>> HandleAsync(Guid accountID)
         {

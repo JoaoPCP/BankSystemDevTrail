@@ -3,14 +3,9 @@ using ProjetoDevTrail.Infra.Repositories.AccountRepositories;
 
 namespace ProjetoDevTrail.Application.UseCase.Accounts.DeleteAccount
 {
-    public class DeleteAccountHandler : IDeleteAccountHandler
+    public class DeleteAccountHandler(IAccountRepository accRepo) : IDeleteAccountHandler
     {
-        private readonly IAccountRepository _accRepo;
-
-        public DeleteAccountHandler(IAccountRepository accRepo)
-        {
-            _accRepo = accRepo;
-        }
+        private readonly IAccountRepository _accRepo = accRepo;
 
         public async Task HandleAsync(Guid accountId)
         {

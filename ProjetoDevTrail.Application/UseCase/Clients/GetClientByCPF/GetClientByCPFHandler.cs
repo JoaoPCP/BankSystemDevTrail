@@ -7,9 +7,11 @@ namespace ProjetoDevTrail.Application.UseCase.Clients.GetClientByCPF
 {
     public class GetClientByCPFHandler(IClientRepository repo) : IGetClientByCPFHandler
     {
+        private readonly IClientRepository _repo = repo;
+
         public async Task<ClientViewDTO> HandleAsync(string cpf)
         {
-            var client = await repo.GetByCPFAsync(cpf);
+            var client = await _repo.GetByCPFAsync(cpf);
             if (client == null)
                 throw new NotFoundException("Cliente não encontrado para o CPF informado");
             return new ClientViewDTO(

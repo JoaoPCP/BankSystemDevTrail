@@ -3,14 +3,9 @@ using ProjetoDevTrail.Infra.Repositories.AccountRepositories;
 
 namespace ProjetoDevTrail.Application.UseCase.Accounts.GetByClient
 {
-    public class GetAccountByClientHandler : IGetAccountByClientHandler
+    public class GetAccountByClientHandler(IAccountRepository accRepo) : IGetAccountByClientHandler
     {
-        private readonly IAccountRepository _accRepo;
-
-        public GetAccountByClientHandler(IAccountRepository accRepo)
-        {
-            _accRepo = accRepo;
-        }
+        private readonly IAccountRepository _accRepo = accRepo;
 
         public async Task<List<AccountInListViewDTO>> HandleAsync(Guid Id)
         {
