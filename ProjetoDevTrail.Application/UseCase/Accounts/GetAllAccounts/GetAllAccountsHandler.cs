@@ -5,9 +5,11 @@ namespace ProjetoDevTrail.Application.UseCase.Accounts.GetAllAccounts
 {
     public class GetAllAccountsHandler(IAccountRepository accRepo) : IGetAllAccountsHandler
     {
+        private readonly IAccountRepository _accRepo = accRepo;
+
         public async Task<List<AccountViewDTO>> HandleAsync()
         {
-            var result = await accRepo.GetAllAsync();
+            var result = await _accRepo.GetAllAsync();
             return result
                 .Select(account => new AccountViewDTO(
                     account.Id,

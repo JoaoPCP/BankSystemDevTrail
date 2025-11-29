@@ -6,16 +6,10 @@ using ProjetoDevTrail.Infra.Repositories.Interface;
 
 namespace ProjetoDevTrail.Infra.Repositories.TransactionRepositories
 {
-    public class TransactionRepository : BaseRepository<Transaction>, ITransactionRepository
+    public class TransactionRepository(BankContext db)
+        : BaseRepository<Transaction>(db),
+            ITransactionRepository
     {
-        private readonly BankContext db;
-
-        public TransactionRepository(BankContext context)
-            : base(context)
-        {
-            db = context;
-        }
-
         public override async Task<Transaction?> GetByIdAsync(Guid id)
         {
             var result = await db

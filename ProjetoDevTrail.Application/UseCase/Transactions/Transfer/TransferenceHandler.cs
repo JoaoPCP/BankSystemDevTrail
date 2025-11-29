@@ -6,16 +6,11 @@ using ProjetoDevTrail.Infra.Repositories.TransactionRepositories;
 
 namespace ProjetoDevTrail.Application.UseCase.Transactions.Transfer
 {
-    public class TransferenceHandler : ITransferenceHandler
+    public class TransferenceHandler(ITransactionRepository transRepo, IAccountRepository accRepo)
+        : ITransferenceHandler
     {
-        private readonly ITransactionRepository _transRepo;
-        private readonly IAccountRepository _accRepo;
-
-        public TransferenceHandler(ITransactionRepository transRepo, IAccountRepository accRepo)
-        {
-            _transRepo = transRepo;
-            _accRepo = accRepo;
-        }
+        private readonly ITransactionRepository _transRepo = transRepo;
+        private readonly IAccountRepository _accRepo = accRepo;
 
         public async Task<TransferenceViewDTO> HandleAsync(TransferenceInputDTO dto)
         {

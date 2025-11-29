@@ -6,9 +6,11 @@ namespace ProjetoDevTrail.Application.UseCase.Clients.GetClientById
 {
     public class GetClientByIdHandler(IClientRepository repo) : IGetClientByIdHandler
     {
+        private readonly IClientRepository _repo = repo;
+
         public async Task<ClientViewDTO> HandleAsync(Guid id)
         {
-            var result = await repo.GetByIdAsync(id);
+            var result = await _repo.GetByIdAsync(id);
             if (result is null)
                 throw new NotFoundException("Cliente não encontrado");
             return new ClientViewDTO(

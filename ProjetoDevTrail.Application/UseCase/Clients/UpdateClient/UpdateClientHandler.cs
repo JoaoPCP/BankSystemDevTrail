@@ -5,9 +5,11 @@ namespace ProjetoDevTrail.Application.UseCase.Clients.UpdateClient
 {
     public class UpdateClientHandler(IClientRepository repo) : IUpdateClientHandler
     {
+        private readonly IClientRepository _repo = repo;
+
         public async Task<ClientViewDTO> HandleAsync(Guid id, UpdateClientDTO dto)
         {
-            var existingClient = await repo.GetByIdAsync(id);
+            var existingClient = await _repo.GetByIdAsync(id);
             if (existingClient == null)
                 throw new KeyNotFoundException("Client not found.");
 
@@ -16,7 +18,7 @@ namespace ProjetoDevTrail.Application.UseCase.Clients.UpdateClient
             existingClient.UpdatedAt = DateTime.UtcNow;
             existingClient.BirthDate = dto.BirthDate;
 
-            var updatedClient = await repo.UpdateAsync(existingClient);
+            var updatedClient = await _repo.UpdateAsync(existingClient);
 
             return new ClientViewDTO(
                 updatedClient.Id,

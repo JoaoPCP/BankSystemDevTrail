@@ -5,9 +5,9 @@
         public string Name { get; }
         public string Email { get; }
 
-        public DateTime BirthDate { get; }
+        public DateOnly BirthDate { get; }
 
-        public UpdateClientDTO(string name, string email, DateTime birthDate)
+        public UpdateClientDTO(string name, string email, DateOnly birthDate)
         {
             Name = name;
             Email = email;

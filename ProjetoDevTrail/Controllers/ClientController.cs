@@ -48,7 +48,7 @@ namespace ProjetoDevTrail.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPatch("{id:guid}")]
         public async Task<IActionResult> UpdateClient(
             [FromServices] IUpdateClientHandler handler,
             [FromBody] UpdateClientDTO dto,

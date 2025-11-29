@@ -13,7 +13,7 @@ namespace ProjetoDevTrail.Application.DTO.ClientDTO
             string name,
             string email,
             string cpf,
-            DateTime birthDate,
+            DateOnly birthDate,
             List<AccountInListViewDTO> accounts
         )
             : base(id, name, email, cpf, birthDate)

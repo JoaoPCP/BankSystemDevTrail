@@ -6,16 +6,11 @@ using ProjetoDevTrail.Infra.Repositories.TransactionRepositories;
 
 namespace ProjetoDevTrail.Application.UseCase.Transactions.Deposit
 {
-    public class DepositHandler : IDepositHandler
+    public class DepositHandler(ITransactionRepository transRepo, IAccountRepository accRepo)
+        : IDepositHandler
     {
-        private readonly ITransactionRepository _transRepo;
-        private readonly IAccountRepository _accRepo;
-
-        public DepositHandler(ITransactionRepository transRepo, IAccountRepository accRepo)
-        {
-            _accRepo = accRepo;
-            _transRepo = transRepo;
-        }
+        private readonly ITransactionRepository _transRepo = transRepo;
+        private readonly IAccountRepository _accRepo = accRepo;
 
         public async Task<DepositViewDTO> HandleAsync(DepositInputDTO dto)
         {

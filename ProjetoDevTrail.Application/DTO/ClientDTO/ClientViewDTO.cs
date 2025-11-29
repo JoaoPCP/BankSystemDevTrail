@@ -6,9 +6,9 @@
         public string Name { get; }
         public string Email { get; }
         public string CPF { get; }
-        public DateTime BirthDate { get; }
+        public DateOnly BirthDate { get; }
 
-        public ClientViewDTO(Guid id, string name, string email, string cpf, DateTime birthDate)
+        public ClientViewDTO(Guid id, string name, string email, string cpf, DateOnly birthDate)
         {
             Id = id;
             Name = name;

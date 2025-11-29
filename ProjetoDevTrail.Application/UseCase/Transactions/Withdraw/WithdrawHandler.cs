@@ -6,16 +6,11 @@ using ProjetoDevTrail.Infra.Repositories.TransactionRepositories;
 
 namespace ProjetoDevTrail.Application.UseCase.Transactions.Withdraw
 {
-    public class WithdrawHandler : IWithdrawHandler
+    public class WithdrawHandler(ITransactionRepository transRepo, IAccountRepository accRepo)
+        : IWithdrawHandler
     {
-        private readonly ITransactionRepository _transRepo;
-        private readonly IAccountRepository _accRepo;
-
-        public WithdrawHandler(ITransactionRepository transRepo, IAccountRepository accRepo)
-        {
-            _accRepo = accRepo;
-            _transRepo = transRepo;
-        }
+        private readonly ITransactionRepository _transRepo = transRepo;
+        private readonly IAccountRepository _accRepo = accRepo;
 
         public async Task<WithdrawViewDTO> HandleAsync(WithdrawInputDTO dto)
         {
