@@ -6,5 +6,6 @@ namespace ProjetoDevTrail.Infra.Repositories.AccountRepositories
     public interface IAccountRepository : IRepository<Account>
     {
         public Task<Account?> GetByAccountNumberAsync(string accountNumber);
+        public Task<List<Account>> GetByClientIdAsync(Guid clientId);
     }
 }
