@@ -64,3 +64,10 @@ Transferência
 Extrato completo de uma conta.
 
 Histórico de transações 
+
+
+
+
+Desenvolvedor: João Paulo Cardoso da Paixão
+![WhatsApp Image 2025-12-01 at 10 20 41](https://github.com/user-attachments/assets/5275b5dd-f08a-48b1-bf78-c642443efe3c)
+
