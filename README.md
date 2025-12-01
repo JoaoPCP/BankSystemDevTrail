@@ -19,6 +19,11 @@ docker compose up -d
 dotnet restore
 ```
 
+### Rodar as migrations (Entity Framework)
+```powershell
+dotnet ef database update --project ProjetoDevTrail.Infra --startup-project ProjetoDevTrail.API
+```
+
 ### Buildar a aplicação
 ```powershell
 dotnet build
@@ -27,11 +32,6 @@ dotnet build
 ### Rodar a aplicação
 ```powershell
 dotnet run
-```
-
-### Subir serviços com Docker Compose
-```powershell
-docker compose up -d
 ```
 
 A API será iniciada e a documentação estará disponível via Swagger.
