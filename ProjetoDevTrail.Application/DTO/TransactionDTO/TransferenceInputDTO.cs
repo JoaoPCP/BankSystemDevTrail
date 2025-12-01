@@ -1,13 +1,19 @@
-﻿using ProjetoDevTrail.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using ProjetoDevTrail.Domain.Entities;
 using ProjetoDevTrail.Domain.Enum.Transaction;
 
 namespace ProjetoDevTrail.Application.DTO.TransactionDTO
 {
     public class TransferenceInputDTO
     {
+        [Required(ErrorMessage = "O valor da transferência é obrigatório.")]
         public decimal Amount { get; }
-        public DateTime TransactionDate { get; }
+
+        [Required(ErrorMessage = "O número da conta de origem é obrigatório.")]
         public string OriginAccountNumber { get; }
+
+        [Required(ErrorMessage = "O número da conta de destino é obrigatório.")]
+        [EnumDataType(typeof(decimal), ErrorMessage = "O valor do depósito deve ser numérico.")]
         public string DestinationAccountNumber { get; }
 
         public TransferenceInputDTO(
