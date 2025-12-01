@@ -13,7 +13,6 @@ namespace ProjetoDevTrail.Application.DTO.TransactionDTO
         public string OriginAccountNumber { get; }
 
         [Required(ErrorMessage = "O número da conta de destino é obrigatório.")]
-        [EnumDataType(typeof(decimal), ErrorMessage = "O valor do depósito deve ser numérico.")]
         public string DestinationAccountNumber { get; }
 
         public TransferenceInputDTO(

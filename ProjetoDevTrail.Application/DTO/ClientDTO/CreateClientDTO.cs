@@ -12,10 +12,6 @@ namespace ProjetoDevTrail.Application.DTO.ClientDTO
         public string Email { get; }
 
         [Required(ErrorMessage = "O CPF é obrigatório.")]
-        [RegularExpression(
-            @"\d{3}\.\d{3}\.\d{3}-\d{2}",
-            ErrorMessage = "O CPF informado não é válido. Formato esperado: XXX.XXX.XXX-XX"
-        )]
         public string CPF { get; }
 
         [Required(ErrorMessage = "A data de nascimento é obrigatória.")]

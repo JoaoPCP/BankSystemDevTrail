@@ -8,7 +8,6 @@ namespace ProjetoDevTrail.Application.DTO.TransactionDTO
         public string accountNumber { get; }
 
         [Required(ErrorMessage = "O valor do depósito é obrigatório.")]
-        [EnumDataType(typeof(decimal), ErrorMessage = "O valor do depósito deve ser numérico.")]
         public decimal Value { get; }
 
         public WithdrawInputDTO(string accountNumber, decimal value)
