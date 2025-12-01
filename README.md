@@ -7,19 +7,25 @@ A aplicação permite gerenciar Clientes, Contas e Transações, garantindo inte
 O sistema implementa funcionalidades essenciais de um banco digital, incluindo abertura de contas, depósitos, saques, transferências atômicas e consulta detalhada de extratos. Toda operação financeira gera uma transação no Ledger, garantindo auditoria completa.
 
 🚀 Como rodar o projeto
-1. Subir serviços com Docker Compose
-
-docker compose up -d
-
-2. Restaurar os pacotes do .NET
+### Restaurar pacotes do .NET
+```powershell
 dotnet restore
+```
 
-3. Buildar a aplicação
+### Buildar a aplicação
+```powershell
 dotnet build
+```
 
-4. Rodar a aplicação
+### Rodar a aplicação
+```powershell
 dotnet run
+```
 
+### Subir serviços com Docker Compose
+```powershell
+docker compose up -d
+```
 
 A API será iniciada e a documentação estará disponível via Swagger.
 
