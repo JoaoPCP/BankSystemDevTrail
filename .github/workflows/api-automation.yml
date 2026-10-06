@@ -11,10 +11,10 @@ permissions:
 jobs:
   api-tests:
     name: Playwright API tests
-    # Secrets não são disponibilizados para PRs vindas de forks.
+    # Executa em PRs do próprio repositório; PRs de forks externos são ignoradas.
     if: >-
       ${{ github.event_name != 'pull_request' ||
-          github.event.pull_request.head.repo.fork == false }}
+          github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     env:
       API_BASE_URL: http://127.0.0.1:5082
