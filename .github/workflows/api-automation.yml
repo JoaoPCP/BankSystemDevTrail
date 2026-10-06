@@ -31,11 +31,6 @@ jobs:
           MSSQL_SA_PASSWORD: TestOnlyPassword!2026
         ports:
           - 1433:1433
-        options: >-
-          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q \"SELECT 1\""
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 12
 
     steps:
       - name: Check out API
@@ -55,7 +50,15 @@ jobs:
         run: dotnet tool install --global dotnet-ef --version 8.0.22
 
       - name: Apply test database migrations
-        run: dotnet ef database update --project ProjetoDevTrail.Infra --startup-project ProjetoDevTrail
+        run: |
+          for attempt in {1..30}; do
+            if dotnet ef database update --project ProjetoDevTrail.Infra --startup-project ProjetoDevTrail; then
+              exit 0
+            fi
+            echo "SQL Server ainda está iniciando (tentativa $attempt/30)."
+            sleep 2
+          done
+          exit 1
 
       - name: Start API
         run: |
