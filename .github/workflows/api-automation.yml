@@ -1,0 +1,108 @@
+name: API automation
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  api-tests:
+    name: Playwright API tests
+    # Executa em PRs do próprio repositório; PRs de forks externos são ignoradas.
+    if: >-
+      ${{ github.event_name != 'pull_request' ||
+          github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: http://127.0.0.1:5082
+      # Senha fictícia para o SQL Server efêmero criado pelo GitHub Actions.
+      ConnectionStrings__BankDatabase: Server=127.0.0.1,1433;Database=BankDbTest;User Id=sa;Password=TestOnlyPassword!2026;TrustServerCertificate=True;
+      TEST_DB_CONNECTION_STRING: Server=127.0.0.1,1433;Database=BankDbTest;User Id=sa;Password=TestOnlyPassword!2026;TrustServerCertificate=True;
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_PID: Developer
+          MSSQL_SA_PASSWORD: TestOnlyPassword!2026
+        ports:
+          - 1433:1433
+
+    steps:
+      - name: Check out API
+        uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore and build API
+        run: |
+          dotnet restore ProjetoDevTrail.sln
+          dotnet build ProjetoDevTrail.sln --configuration Release --no-restore
+
+      - name: Install EF Core tools
+        run: dotnet tool install --global dotnet-ef --version 8.0.22
+
+      - name: Apply test database migrations
+        run: |
+          for attempt in {1..30}; do
+            if dotnet ef database update --project ProjetoDevTrail.Infra --startup-project ProjetoDevTrail; then
+              exit 0
+            fi
+            echo "SQL Server ainda está iniciando (tentativa $attempt/30)."
+            sleep 2
+          done
+          exit 1
+
+      - name: Start API
+        run: |
+          dotnet run --project ProjetoDevTrail --configuration Release --no-build --urls "$API_BASE_URL" > api.log 2>&1 &
+          echo $! > api.pid
+
+      - name: Wait for API
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent "$API_BASE_URL/swagger/index.html" > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat api.log
+          exit 1
+
+      - name: Check out API automation
+        uses: actions/checkout@v7
+        with:
+          repository: XCastr0/projetoBankAuto
+          ref: main
+          path: api-automation
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: api-automation/package-lock.json
+
+      - name: Run Playwright API automation
+        working-directory: api-automation
+        run: |
+          npm ci
+          npm run test:api
+
+      - name: Upload automation artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: playwright-artifacts
+          path: |
+            api-automation/playwright-report/
+            api-automation/test-results/
+            api.log
+          if-no-files-found: ignore
